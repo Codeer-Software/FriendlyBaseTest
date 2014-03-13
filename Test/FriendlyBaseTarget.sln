@@ -1,6 +1,8 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FriendlyBaseTest", "FriendlyBaseTest\FriendlyBaseTest.csproj", "{186788AB-5A98-44B2-8C0C-A65A0114F6B2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FriendlyBaseTargetx64N20", "FriendlyBaseTargetx64N20\FriendlyBaseTargetx64N20.csproj", "{275A9459-E8AC-4A7F-90D1-327E13A4B0EB}"
