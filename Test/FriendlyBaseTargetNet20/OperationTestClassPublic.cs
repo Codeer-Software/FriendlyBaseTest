@@ -76,5 +76,11 @@ namespace FriendlyBaseTargetNet20
         {
             throw new SystemException("test");
         }
+
+        static int? _nullableValue;
+        public static void NullableTest(int? value)
+        {
+            _nullableValue = value;
+        }
     }
 }
