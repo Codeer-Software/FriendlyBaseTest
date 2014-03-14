@@ -78,6 +78,7 @@ namespace FriendlyBaseTargetNet20
         }
 
         static int? _nullableValue;
+        static int? NullableValue { get { return _nullableValue; } set { _nullableValue = value; } }
         public static void NullableTest(int? value)
         {
             _nullableValue = value;

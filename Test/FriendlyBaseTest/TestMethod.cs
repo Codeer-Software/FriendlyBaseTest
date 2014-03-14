@@ -308,7 +308,7 @@ namespace FriendlyBaseTest
             value = (int?)app[typeof(OperationTestClassPublic), "_nullableValue"]().Core;
             Assert.IsNull(value);
         }
-        
+
         /// <summary>
         /// 終了処理
         /// </summary>

@@ -246,6 +246,21 @@ namespace FriendlyBaseTest
         }
 
         /// <summary>
+        /// Nullableのテスト
+        /// </summary>
+        [Test]
+        public void TestNullable()
+        {
+            app[typeof(OperationTestClassPublic), "NullableValue"](1);
+            int? value = (int?)app[typeof(OperationTestClassPublic), "_nullableValue"]().Core;
+            Assert.AreEqual(1, value.Value);
+
+            app[typeof(OperationTestClassPublic), "NullableValue"](null);
+            value = (int?)app[typeof(OperationTestClassPublic), "_nullableValue"]().Core;
+            Assert.IsNull(value);
+        }
+
+        /// <summary>
         /// 終了処理
         /// </summary>
         [TestFixtureTearDown]
