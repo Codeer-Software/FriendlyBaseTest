@@ -38,6 +38,18 @@ namespace FriendlyBaseTest
         }
 
         /// <summary>
+        /// AppVarからAppを取得できること
+        /// </summary>
+        [Test]
+        public void TestApp()
+        {
+            AppVar v = app.Dim();
+            Assert.IsTrue(ReferenceEquals(v.App, app));
+            v.App[typeof(Application), "OpenForms"]()["[]"](0)["Text"]("abc");
+            Assert.AreEqual("abc", v.App[typeof(Application), "OpenForms"]()["[]"](0)["Text"]().Core);
+        }
+
+        /// <summary>
         /// Coreプロパティーで正常にシリアライズできるテスト
         /// </summary>
         [Test]
