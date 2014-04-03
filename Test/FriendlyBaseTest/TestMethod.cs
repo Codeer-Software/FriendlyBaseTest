@@ -253,13 +253,19 @@ namespace FriendlyBaseTest
             {
                 AppVar v = app.Dim(new NewInfo<OutRef>());
                 AppVar arg = app.Dim();
-                v["CheckOverload", new OperationTypeInfo(typeof(OutRef).FullName, typeof(Control).FullName)](arg);
+                int result = (int)v["CheckOverload", new OperationTypeInfo(typeof(OutRef).FullName, typeof(Control).FullName)](arg).Core;
+                Assert.AreEqual(10, result);
+            }
+            {
+                AppVar v = app.Dim(new NewInfo<OutRef>());
+                AppVar arg = app.Dim();
+                v["CheckOverload", new OperationTypeInfo(typeof(OutRef).FullName, typeof(Control).FullName + "&")](arg);
                 Assert.AreEqual((string)arg["GetType"]()["FullName"]().Core, typeof(Button).FullName);
             }
             {
                 AppVar v = app.Dim(new NewInfo<OutRef>());
                 AppVar arg = app.Dim();
-                v["CheckOverload", new OperationTypeInfo(typeof(OutRef).FullName, typeof(Form).FullName)](arg);
+                v["CheckOverload", new OperationTypeInfo(typeof(OutRef).FullName, typeof(Form).FullName + "&")](arg);
                 Assert.AreEqual((string)arg["GetType"]()["FullName"]().Core, typeof(Form).FullName);
             }
         }

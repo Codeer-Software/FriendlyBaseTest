@@ -182,11 +182,17 @@ namespace FriendlyBaseTest
                 AppVar arg = app.Dim();
                 AppVar v = app.Dim(new NewInfo<OutRef>(arg), new OperationTypeInfo(typeof(OutRef).FullName, typeof(Control).FullName));
                 Assert.AreEqual((string)v["GetType"]()["FullName"]().Core, typeof(OutRef).FullName);
+                Assert.AreEqual((string)v["_constructorResult"]()["GetType"]()["FullName"]().Core, typeof(DataGrid).FullName);
+            }
+            {
+                AppVar arg = app.Dim();
+                AppVar v = app.Dim(new NewInfo<OutRef>(arg), new OperationTypeInfo(typeof(OutRef).FullName, typeof(Control).FullName + "&"));
+                Assert.AreEqual((string)v["GetType"]()["FullName"]().Core, typeof(OutRef).FullName);
                 Assert.AreEqual((string)arg["GetType"]()["FullName"]().Core, typeof(Button).FullName);
             }
             {
                 AppVar arg = app.Dim();
-                AppVar v = app.Dim(new NewInfo<OutRef>(arg), new OperationTypeInfo(typeof(OutRef).FullName, typeof(Form).FullName));
+                AppVar v = app.Dim(new NewInfo<OutRef>(arg), new OperationTypeInfo(typeof(OutRef).FullName, typeof(Form).FullName + "&"));
                 Assert.AreEqual((string)v["GetType"]()["FullName"]().Core, typeof(OutRef).FullName);
                 Assert.AreEqual((string)arg["GetType"]()["FullName"]().Core, typeof(Form).FullName);
             }

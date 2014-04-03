@@ -38,6 +38,17 @@ namespace FriendlyBaseTargetNet20
             c = new Button();
         }
 
+        Control _constructorResult;
+
+        /// <summary>
+        /// 引数解決テスト用
+        /// </summary>
+        /// <param name="c">コントロール</param>
+        public OutRef(Control c)
+        {
+            _constructorResult = new DataGrid();
+        }
+
         /// <summary>
         /// 引数解決テスト用
         /// </summary>
@@ -79,6 +90,15 @@ namespace FriendlyBaseTargetNet20
         public void CheckOverload(out Control c)
         {
             c = new Button();
+        }
+
+        /// <summary>
+        /// メソッド
+        /// </summary>
+        /// <param name="c">コントロール</param>
+        public int CheckOverload(Control c)
+        {
+            return 10;
         }
 
         /// <summary>
