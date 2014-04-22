@@ -343,9 +343,15 @@ namespace FriendlyBaseTest
                 }
                 //AppVarから取得
                 {
-                    WindowControl targetForm = new WindowControl(app, v);
+                    WindowControl targetForm = new WindowControl(v);
                     targetForm["Text"]("bbb");
                     Assert.AreEqual(targetForm["Text"]().ToString(), "bbb");
+                }
+                //AppVarから取得(非推奨インターフェイス)
+                {
+                    WindowControl targetForm = new WindowControl(app, v);
+                    targetForm["Text"]("ccc");
+                    Assert.AreEqual(targetForm["Text"]().ToString(), "ccc");
                 }
             }
             if (process != null)
@@ -1202,10 +1208,10 @@ namespace FriendlyBaseTest
             {
                 process = Process.GetProcessById(app.ProcessId);
                 WindowControl targetForm = WindowControl.FromZTop(app);
-                WindowControl checkBox1 = new WindowControl(app, targetForm["checkBox1"]());
+                WindowControl checkBox1 = new WindowControl(targetForm["checkBox1"]());
                 checkBox1.SetFocus();
                 Assert.IsTrue((bool)checkBox1["Focused"]().Core);
-                WindowControl checkBox2 = new WindowControl(app, targetForm["checkBox2"]());
+                WindowControl checkBox2 = new WindowControl(targetForm["checkBox2"]());
                 checkBox2.SetFocus();
                 Assert.IsTrue((bool)checkBox2["Focused"]().Core);
             }
@@ -1228,7 +1234,7 @@ namespace FriendlyBaseTest
 
                 //Z待ち
                 WindowControl targetForm = WindowControl.FromZTop(app);
-                WindowControl clickAsyncPanel = new WindowControl(app, targetForm["clickAsyncPanel"]());
+                WindowControl clickAsyncPanel = new WindowControl(targetForm["clickAsyncPanel"]());
                 {
                     Async async;
                     Click(clickAsyncPanel, 1, 2, out async);
@@ -1269,7 +1275,7 @@ namespace FriendlyBaseTest
 
                 //Z待ち
                 WindowControl targetForm = WindowControl.FromZTop(app);
-                WindowControl clickAsyncPanel = new WindowControl(app, targetForm["clickAsyncPanel"]());
+                WindowControl clickAsyncPanel = new WindowControl(targetForm["clickAsyncPanel"]());
                 {
                     Async async;
                     Click(clickAsyncPanel, 1, 2, out async);
@@ -1312,7 +1318,7 @@ namespace FriendlyBaseTest
             {
                 process = Process.GetProcessById(app.ProcessId);
                 WindowControl targetForm = WindowControl.FromZTop(app);
-                WindowControl clickAsyncPanel = new WindowControl(app, targetForm["clickAsyncPanel"]());
+                WindowControl clickAsyncPanel = new WindowControl(targetForm["clickAsyncPanel"]());
 
                 Async async;
                 Click(clickAsyncPanel, 1, 2, out async);
@@ -1541,14 +1547,14 @@ namespace FriendlyBaseTest
             using (WindowsAppFriend app = SetUp())
             {
                 AppVar main = app[typeof(Control), "FromHandle"](Process.GetProcessById(app.ProcessId).MainWindowHandle);
-                WindowControl w = new WindowControl(app, main);
+                WindowControl w = new WindowControl(main);
                 main["Close", new Async()]();
             }
             //Handle
             using (WindowsAppFriend app = SetUp())
             {
                 AppVar main = app[typeof(Control), "FromHandle"](Process.GetProcessById(app.ProcessId).MainWindowHandle);
-                WindowControl w = new WindowControl(app, main);
+                WindowControl w = new WindowControl(main);
                 main["Close", new Async()]();
             }
             //各種static
