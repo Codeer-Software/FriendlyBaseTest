@@ -214,6 +214,18 @@ namespace FriendlyBaseTest
             }
         }
 
+        [Test]
+        public void TestIsNull()
+        {
+            AppVar var = app.Dim();
+            Assert.IsTrue(var.IsNull);
+            var.Core = 1;
+            Assert.IsFalse(var.IsNull);
+            AppVar form = app.Dim(new NewInfo<Form>());
+            Assert.IsFalse(form.IsNull);
+            Assert.IsTrue(form["Parent"]().IsNull);
+        }
+
         /// <summary>
         /// 終了処理
         /// </summary>
