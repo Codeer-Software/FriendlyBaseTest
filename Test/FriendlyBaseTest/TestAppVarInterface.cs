@@ -226,6 +226,32 @@ namespace FriendlyBaseTest
             Assert.IsTrue(form["Parent"]().IsNull);
         }
 
+
+        [Test]
+        public void TestHelperIsNull()
+        {
+            AppVar var = app.Dim();
+            Assert.IsTrue(AppVarHelper.IsNull(var));
+            var.Core = 1;
+            Assert.IsFalse(AppVarHelper.IsNull(var));
+            AppVar form = app.Dim(new NewInfo<Form>());
+            Assert.IsFalse(AppVarHelper.IsNull(form));
+            Assert.IsTrue(AppVarHelper.IsNull(form["Parent"]()));
+        }
+
+        [Test]
+        public void TestHelperReferenceEquals()
+        {
+            AppVar main1 = app[typeof(Application), "OpenForms"]()["[]"](0);
+            AppVar main2 = app[typeof(Control), "FromHandle"](Process.GetProcessById(app.ProcessId).MainWindowHandle);
+            AppVar form = app.Dim(new NewInfo<Form>());
+
+            Assert.IsTrue(AppVarHelper.ReferenceEquals(main1, main2));
+            Assert.IsFalse(AppVarHelper.ReferenceEquals(main1, form));
+
+            Assert.IsFalse(AppVarHelper.ReferenceEquals(1, 1));
+        }
+
         /// <summary>
         /// 終了処理
         /// </summary>
