@@ -1303,6 +1303,51 @@ namespace FriendlyBaseTest
             }
         }
 
+        /// <summary>
+        /// 次モーダル待ちテスト
+        /// </summary>
+        [Test]
+        public void TestWaitNextModalDestroyed()
+        {
+            Process process = null;
+            using (WindowsAppFriend app = SetUp())
+            {
+                process = Process.GetProcessById(app.ProcessId);
+                var form = app.Dim(new NewInfo<Form>());
+                var w = new WindowControl(form);
+                form["Close"]();
+                var next = w.WaitForNextModal();
+                Assert.IsNull(next);
+            }
+            if (process != null)
+            {
+                process.CloseMainWindow();
+            }
+        }
+
+        /// <summary>
+        /// 次モーダル待ちテスト
+        /// </summary>
+        [Test]
+        public void TestWaitNextModalDestroyedAsync()
+        {
+            Process process = null;
+            using (WindowsAppFriend app = SetUp())
+            {
+                process = Process.GetProcessById(app.ProcessId);
+                var form = app.Dim(new NewInfo<Form>());
+                var w = new WindowControl(form);
+                var a = new Async();
+                form["Close", a]();
+                var next = w.WaitForNextModal(a);
+                Assert.IsNull(next);
+            }
+            if (process != null)
+            {
+                process.CloseMainWindow();
+            }
+        }
+
         const int BM_CLICK = 0x00F5;
         [DllImport("user32.dll", CharSet = CharSet.Auto)]
         static extern IntPtr SendMessage(IntPtr hWnd, int Msg, IntPtr wParam, IntPtr lParam);
