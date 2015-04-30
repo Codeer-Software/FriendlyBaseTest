@@ -203,6 +203,32 @@ namespace FriendlyBaseTest
             }
         }
 
+        [Test]
+        public void TestMultiDomain()
+        {
+            Process process = null;
+            try
+            {
+                if (IntPtr.Size == 4)
+                {
+                    process = Process.Start(TargetPath.Path32);
+                }
+                else
+                {
+                    process = Process.Start(TargetPath.Path64);
+                }
+                var app = new WindowsAppFriend(process);
+                WindowControl.FromZTop(app).AppVar["StartNewDomain"]();
+                app = app.AttachOtherDomains()[0];
+                string name = (string)app[typeof(AppDomain), "CurrentDomain"]()["FriendlyName"]().Core;
+                Assert.AreEqual("new domain", name);
+            }
+            finally
+            {
+                process.Kill();
+            }
+        }
+
         /// <summary>
         /// AppVarを宣言
         /// 宣言する元はこの関数内で接続する

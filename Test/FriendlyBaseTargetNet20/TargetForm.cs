@@ -36,6 +36,11 @@ namespace FriendlyBaseTargetNet20
             }
         }
 
+        public void StartNewDomain()
+        {
+            AppDomain.CreateDomain("new domain").DoCallBack(() => new Form().Show());
+        }
+
         /// <summary>
         /// 別スレッドでウィンドウを表示する
         /// </summary>
@@ -194,6 +199,5 @@ namespace FriendlyBaseTargetNet20
             }
             base.WndProc(ref m);
         }
-
     }
 }
