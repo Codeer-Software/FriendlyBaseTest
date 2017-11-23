@@ -418,7 +418,7 @@ namespace FriendlyBaseTest
                 }
                 //矩形から取得
                 {
-                    WindowControl _textBox = targetForm.IdentifyFromBounds(49, 160, 100, 19);
+                    WindowControl _textBox = targetForm.IdentifyFromBounds(49, 161, 100, 19);
                     _textBox["Text"]("d");
                     Assert.AreEqual(_textBox["Text"]().ToString(), "d");
                 }
@@ -507,7 +507,7 @@ namespace FriendlyBaseTest
                 }
                 try
                 {
-                    targetForm.IdentifyFromBounds(10, 281, 98, 50);
+                    targetForm.IdentifyFromBounds(10, 282, 98, 50);
                     Assert.IsTrue(false);
                 }
                 catch (WindowIdentifyException e)
@@ -569,7 +569,7 @@ namespace FriendlyBaseTest
 
                 //矩形から取得
                 {
-                    WindowControl[] control = targetForm.GetFromBounds(10, 281, 98, 50);
+                    WindowControl[] control = targetForm.GetFromBounds(10, 282, 98, 50);
                     Assert.AreEqual(control.Length, 2);
                     for (int i = 0; i < control.Length; i++)
                     {
@@ -1634,7 +1634,7 @@ namespace FriendlyBaseTest
             }
             using (WindowsAppFriend app = SetUp())
             {
-                WindowControl.IdentifyFromWindowClass(app, "WindowsForms10.Window.8.app.0.33c0d9d");
+                WindowControl.IdentifyFromWindowClass(app, "WindowsForms10.Window.8.app.0.378734a");
                 WindowControl.FromZTop(app)["Close", new Async()]();
             }
             using (WindowsAppFriend app = SetUp())
@@ -1654,12 +1654,12 @@ namespace FriendlyBaseTest
             }
             using (WindowsAppFriend app = SetUp())
             {
-                WindowControl.WaitForIdentifyFromWindowClass(app, "WindowsForms10.Window.8.app.0.33c0d9d");
+                WindowControl.WaitForIdentifyFromWindowClass(app, "WindowsForms10.Window.8.app.0.378734a");
                 WindowControl.FromZTop(app)["Close", new Async()]();
             }
             using (WindowsAppFriend app = SetUp())
             {
-                WindowControl.WaitForIdentifyFromWindowClass(app, "WindowsForms10.Window.8.app.0.33c0d9d", new Async());
+                WindowControl.WaitForIdentifyFromWindowClass(app, "WindowsForms10.Window.8.app.0.378734a", new Async());
                 WindowControl.FromZTop(app)["Close", new Async()]();
             }
             using (WindowsAppFriend app = SetUp())

@@ -185,14 +185,17 @@ namespace FriendlyBaseTest
                 }
                 catch (FriendlyOperationException e)
                 {
-                    Assert.AreEqual(e.Message, "対象プロセスの操作に失敗しました。" + Environment.NewLine +
+                    var expected1 = "対象プロセスの操作に失敗しました。" + Environment.NewLine +
                         "以下の可能性が考えられます。" + Environment.NewLine +
                         "・CLRのバージョン指定が間違っている。" + Environment.NewLine +
                         "・対象プロセスを操作する権限が足りていない。" + Environment.NewLine +
                         "・接続中に対象プロセスが終了した。" + Environment.NewLine +
                         "・指定のウィンドウハンドルのウィンドウが破棄された。" + Environment.NewLine +
                         "スプラッシュウィンドウを表示するアプリケーションの場合は、起動直後にメインウィンドウがスプラッシュウィンドウになっている場合があります。" + Environment.NewLine +
-                        "明示的に期待のウィンドウのハンドルを指定してください。");
+                        "明示的に期待のウィンドウのハンドルを指定してください。";
+
+                    var expected2 = @"アプリケーションとの通信に失敗しました。" + Environment.NewLine +                        "指定の実行対象スレッドに含まれるウィンドウは存在しません。" + Environment.NewLine +                        "もしくは既に破棄されました。" + Environment.NewLine +                        "スプラッシュウィンドウを表示するアプリケーションの場合は、起動直後にメインウィンドウがスプラッシュウィンドウになっている場合があります。" + Environment.NewLine +                        "明示的に期待のウィンドウのハンドルを指定してください。";
+                    Assert.IsTrue(e.Message == expected1 || e.Message == expected2);
                     return;
                 }
                 Assert.Fail();//タイミングによっては失敗しそうだが。まあ手動でやり直す。

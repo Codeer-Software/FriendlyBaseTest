@@ -24,7 +24,7 @@ namespace FriendlyBaseTest
         /// <summary>
         /// 用意
         /// </summary>
-        [TestFixtureSetUp]
+        [SetUp]
         public void SetUp()
         {
             if (IntPtr.Size == 4)
@@ -61,7 +61,7 @@ namespace FriendlyBaseTest
             }
             catch (ArgumentException e)
             {
-                string message = "値を Null にすることはできません。" + Environment.NewLine + "パラメータ名: target";
+                string message = "値を Null にすることはできません。" + Environment.NewLine + "パラメーター名:target";
                 Assert.AreEqual(e.Message, message);
             }
 
@@ -72,7 +72,7 @@ namespace FriendlyBaseTest
             }
             catch (ArgumentException e)
             {
-                string message = "値を Null にすることはできません。" + Environment.NewLine + "パラメータ名: arguments";
+                string message = "値を Null にすることはできません。" + Environment.NewLine + "パラメーター名:arguments";
                 Assert.AreEqual(e.Message, message);
             }
 
@@ -107,7 +107,7 @@ namespace FriendlyBaseTest
         /// <summary>
         /// 終了処理
         /// </summary>
-        [TestFixtureTearDown]
+        [TearDown]
         public void TearDown()
         {
             if (app != null)

@@ -24,7 +24,7 @@ namespace FriendlyBaseTest
         /// <summary>
         /// 用意
         /// </summary>
-        [TestFixtureSetUp]
+        [SetUp]
         public void SetUp()
         {
             if (IntPtr.Size == 4)
@@ -255,7 +255,7 @@ namespace FriendlyBaseTest
         /// <summary>
         /// 終了処理
         /// </summary>
-        [TestFixtureTearDown]
+        [TearDown]
         public void TearDown()
         {
             if (app != null)
