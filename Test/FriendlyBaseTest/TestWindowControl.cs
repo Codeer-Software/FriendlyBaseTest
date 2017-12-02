@@ -1675,6 +1675,129 @@ namespace FriendlyBaseTest
         }
 
         /// <summary>
+        /// Sizeテスト
+        /// </summary>
+        [Test]
+        public void TestSize()
+        {
+            using (WindowsAppFriend app = SetUp())
+            {
+                WindowControl targetForm = WindowControl.FromZTop(app);
+                Assert.AreEqual((Size)targetForm["Size"]().Core, targetForm.Size);
+                targetForm.Close();
+            }
+        }
+
+        /// <summary>
+        /// PointToScreenテスト
+        /// </summary>
+        [Test]
+        public void TestPointToScreen()
+        {
+            using (WindowsAppFriend app = SetUp())
+            {
+                WindowControl targetForm = WindowControl.FromZTop(app);
+                Assert.AreEqual((Point)targetForm["PointToScreen"](new Point()).Core, targetForm.PointToScreen(new Point()));
+                targetForm.Close();
+            }
+        }
+
+        [Test]
+        public void TestClose()
+        {
+            using (WindowsAppFriend app = SetUp())
+            {
+                WindowControl targetForm = WindowControl.FromZTop(app);
+                var form = app.Dim(new NewInfo<Form>());
+                form["Show"]();
+                var ctrl = new WindowControl(form);
+                ctrl.Close();
+                ctrl.WaitForDestroy();
+                targetForm.Close();
+            }
+        }
+
+        [Test]
+        public void TestActivate()
+        {
+            using (WindowsAppFriend app = SetUp())
+            {
+                WindowControl targetForm = WindowControl.FromZTop(app);
+                var form = app.Dim(new NewInfo<Form>());
+                form["Show"]();
+
+                var active = app[typeof(Form), "ActiveForm"]();
+                Assert.AreEqual((IntPtr)active["Handle"]().Core, (IntPtr)form["Handle"]().Core);
+
+                targetForm.Activate();
+                active = app[typeof(Form), "ActiveForm"]();
+                Assert.AreEqual((IntPtr)active["Handle"]().Core, (IntPtr)targetForm["Handle"]().Core);
+
+                targetForm.Close();
+            }
+        }
+
+        /// <summary>
+        /// 次ウィンドウ待ちテスト
+        /// </summary>
+        [Test]
+        public void TestWaitNextWindow()
+        {
+            using (WindowsAppFriend app = SetUp())
+            {
+                WindowControl targetForm = WindowControl.FromZTop(app);
+                var next = WindowControl.WaitForNextWindow(app, () =>
+                {
+                    var form = app.Dim(new NewInfo<Form>());
+                    form["Show"]();
+                });
+                next.Close();
+                targetForm.Close();
+            }
+        }
+
+        /// <summary>
+        /// 次ウィンドウ取得テスト
+        /// </summary>
+        [Test]
+        public void TestGetNextWindow()
+        {
+            using (WindowsAppFriend app = SetUp())
+            {
+                WindowControl targetForm = WindowControl.FromZTop(app);
+                var nexts = WindowControl.GetNextWindows(app, () =>
+                {
+                    app.Dim(new NewInfo<Form>())["Show"]();
+                    app.Dim(new NewInfo<Form>())["Show"]();
+                });
+                Assert.AreEqual(2, nexts.Length);
+                targetForm.Close();
+            }
+        }
+
+        /// <summary>
+        /// 次ウィンドウ待ちテスト
+        /// </summary>
+        [Test]
+        public void TestWaitNextWindowAsync()
+        {
+            using (WindowsAppFriend app = SetUp())
+            {
+                WindowControl targetForm = WindowControl.FromZTop(app);
+                var async = new Async();
+                var next = WindowControl.WaitForNextWindow(app, () =>
+                {
+                    var form = app.Dim(new NewInfo<Form>());
+                    form["Show", async]();
+                    form["Close"]();
+                },
+                async);
+                Assert.IsNull(next);
+                targetForm.Close();
+            }
+        }
+
+        /// <summary>
         /// クリックエミュレート
         /// </summary>
         /// <param name="c">コントロール</param>
