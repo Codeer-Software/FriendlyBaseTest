@@ -84,6 +84,45 @@ namespace FriendlyBaseTest
         }
 
         /// <summary>
+        /// 切り替えたExecuteContextがGCによって破棄されないこと
+        /// </summary>
+        [Test]
+        public void TestContextNotDisposedByGC()
+        {
+            WindowsAppFriend app2 = null;
+            if (IntPtr.Size == 4)
+            {
+                app2 = new WindowsAppFriend(Process.Start(TargetPath.Path32), "2.0");
+            }
+            else
+            {
+                app2 = new WindowsAppFriend(Process.Start(TargetPath.Path64), "2.0");
+            }
+
+            try
+            {
+                WindowControl targetForm = WindowControl.FromZTop(app2);
+                //実行コンテキストを変更
+                ExecuteContext context = new ExecuteContext(app2, targetForm.AppVar);
+                var old = app2.ChangeContext(context);
+                //古いコンテキストを破棄
+                old.Dispose();
+
+                //nullにしてもapp2が持っているのでコンテキストは破棄されない
+                context = null;
+                GC.Collect();
+                GC.WaitForPendingFinalizers();
+
+                //これは正常に動くこと
+                app2.Dim();
+            }
+            finally
+            {
+                Process.GetProcessById(app2.ProcessId).CloseMainWindow();
+            }
+        }
+        
+        /// <summary>
         /// スレッドコンテキストの切り替えテスト
         /// ついでにExecuteContextのDisposeのテスト
         /// </summary>
