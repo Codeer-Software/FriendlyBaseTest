@@ -396,7 +396,7 @@ namespace Test35
                     form["Show"]();
                 });
                 next.Close();
-                targetForm.Close();
+                targetForm.Close(new Async());
             }
         }
 
@@ -415,7 +415,7 @@ namespace Test35
                     app.Dim(new NewInfo<Form>())["Show"]();
                 });
                 Assert.AreEqual(2, nexts.Length);
-                targetForm.Close();
+                targetForm.Close(new Async());
             }
         }
 
@@ -437,7 +437,7 @@ namespace Test35
                 },
                 async);
                 Assert.IsNull(next);
-                targetForm.Close();
+                targetForm.Close(new Async());
             }
         }
     }

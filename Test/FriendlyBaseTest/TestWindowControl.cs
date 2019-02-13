@@ -1684,7 +1684,7 @@ namespace FriendlyBaseTest
             {
                 WindowControl targetForm = WindowControl.FromZTop(app);
                 Assert.AreEqual((Size)targetForm["Size"]().Core, targetForm.Size);
-                targetForm.Close();
+                targetForm.Close(new Async());
             }
         }
 
@@ -1698,7 +1698,7 @@ namespace FriendlyBaseTest
             {
                 WindowControl targetForm = WindowControl.FromZTop(app);
                 Assert.AreEqual((Point)targetForm["PointToScreen"](new Point()).Core, targetForm.PointToScreen(new Point()));
-                targetForm.Close();
+                targetForm.Close(new Async());
             }
         }
 
@@ -1713,7 +1713,7 @@ namespace FriendlyBaseTest
                 var ctrl = new WindowControl(form);
                 ctrl.Close();
                 ctrl.WaitForDestroy();
-                targetForm.Close();
+                targetForm.Close(new Async());
             }
         }
 
@@ -1733,7 +1733,7 @@ namespace FriendlyBaseTest
                 active = app[typeof(Form), "ActiveForm"]();
                 Assert.AreEqual((IntPtr)active["Handle"]().Core, (IntPtr)targetForm["Handle"]().Core);
 
-                targetForm.Close();
+                targetForm.Close(new Async());
             }
         }
 
@@ -1752,7 +1752,7 @@ namespace FriendlyBaseTest
                     form["Show"]();
                 });
                 next.Close();
-                targetForm.Close();
+                targetForm.Close(new Async());
             }
         }
 
@@ -1771,7 +1771,7 @@ namespace FriendlyBaseTest
                     app.Dim(new NewInfo<Form>())["Show"]();
                 });
                 Assert.AreEqual(2, nexts.Length);
-                targetForm.Close();
+                targetForm.Close(new Async());
             }
         }
 
@@ -1793,7 +1793,7 @@ namespace FriendlyBaseTest
                 },
                 async);
                 Assert.IsNull(next);
-                targetForm.Close();
+                targetForm.Close(new Async());
             }
         }
 
