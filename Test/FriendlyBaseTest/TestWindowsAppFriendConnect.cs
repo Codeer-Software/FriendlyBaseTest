@@ -194,7 +194,11 @@ namespace FriendlyBaseTest
                         "スプラッシュウィンドウを表示するアプリケーションの場合は、起動直後にメインウィンドウがスプラッシュウィンドウになっている場合があります。" + Environment.NewLine +
                         "明示的に期待のウィンドウのハンドルを指定してください。";
 
-                    var expected2 = @"アプリケーションとの通信に失敗しました。" + Environment.NewLine +                        "指定の実行対象スレッドに含まれるウィンドウは存在しません。" + Environment.NewLine +                        "もしくは既に破棄されました。" + Environment.NewLine +                        "スプラッシュウィンドウを表示するアプリケーションの場合は、起動直後にメインウィンドウがスプラッシュウィンドウになっている場合があります。" + Environment.NewLine +                        "明示的に期待のウィンドウのハンドルを指定してください。";
+                    var expected2 = @"アプリケーションとの通信に失敗しました。" + Environment.NewLine +
+                        "指定の実行対象スレッドに含まれるウィンドウは存在しません。" + Environment.NewLine +
+                        "もしくは既に破棄されました。" + Environment.NewLine +
+                        "スプラッシュウィンドウを表示するアプリケーションの場合は、起動直後にメインウィンドウがスプラッシュウィンドウになっている場合があります。" + Environment.NewLine +
+                        "明示的に期待のウィンドウのハンドルを指定してください。";
                     Assert.IsTrue(e.Message == expected1 || e.Message == expected2);
                     return;
                 }
@@ -222,9 +226,10 @@ namespace FriendlyBaseTest
                 }
                 var app = new WindowsAppFriend(process);
                 WindowControl.FromZTop(app).AppVar["StartNewDomain"]();
-                app = app.AttachOtherDomains()[0];
-                string name = (string)app[typeof(AppDomain), "CurrentDomain"]()["FriendlyName"]().Core;
+                var newApp = app.AttachOtherDomains()[0];
+                string name = (string)newApp[typeof(AppDomain), "CurrentDomain"]()["FriendlyName"]().Core;
                 Assert.AreEqual("new domain", name);
+                Assert.AreEqual(app.ProcessId, newApp.ProcessId);
             }
             finally
             {
