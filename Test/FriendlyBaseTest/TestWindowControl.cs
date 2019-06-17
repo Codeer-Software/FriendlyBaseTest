@@ -384,7 +384,108 @@ namespace FriendlyBaseTest
                 process.CloseMainWindow();
             }
         }
+        
+        /// <summary>
+        /// 子ウィンドウの取得処理
+        /// </summary>
+        [Test]
+        public void TestGetChild()
+        {
+            Process process = null;
+            using (WindowsAppFriend app = SetUp())
+            {
+                process = Process.GetProcessById(app.ProcessId);
+                WindowControl targetForm = WindowControl.FromZTop(app);
 
+                var list = new List<string>();
+                foreach (var e in targetForm.GetChildren())
+                {
+                    list.Add(e.TypeFullName + ":" + e.GetWindowText());
+                }
+                var ret = new[] {
+                    "System.Windows.Forms.Button:別スレッドWindow起動",
+                    "FriendlyBaseTargetNet20.TestUserControl:",
+                    "System.Windows.Forms.GroupBox:タイプとウィンドウクラスが同一",
+                    "System.Windows.Forms.GroupBox:WindowTextが同じ",
+                    "System.Windows.Forms.PictureBox:",
+                    "System.Windows.Forms.Panel:",
+                    "System.Windows.Forms.Label:↓ここに矩形の重なったオブジェクトがある",
+                    "System.Windows.Forms.DataGridView:",
+                    "FriendlyBaseTargetNet20.PanelEx:",
+                    "FriendlyBaseTargetNet20.PanelEx:",
+                    "FriendlyBaseTargetNet20.PanelEx:",
+                    "FriendlyBaseTargetNet20.PanelEx:",
+                    "System.Windows.Forms.Button:button1",
+                    "System.Windows.Forms.Panel:",
+                };
+                Assert.AreEqual(ret.Length, list.Count);
+                for (int i = 0; i < ret.Length; i++)
+                {
+                    Assert.AreEqual(ret[i], list[i]);
+                }
+            }
+            if (process != null)
+            {
+                process.CloseMainWindow();
+            }
+        }
+
+        /// <summary>
+        /// 子孫ウィンドウの取得処理
+        /// </summary>
+        [Test]
+        public void TestGetDescendants()
+        {
+            Process process = null;
+            using (WindowsAppFriend app = SetUp())
+            {
+                process = Process.GetProcessById(app.ProcessId);
+                WindowControl targetForm = WindowControl.FromZTop(app);
+
+                var list = new List<string>();
+                foreach (var e in targetForm.GetDescendants())
+                {
+                    list.Add(e.TypeFullName + ":" + e.GetWindowText());
+                }
+                var ret = new[] {
+                    "System.Windows.Forms.Button:別スレッドWindow起動",
+                    "FriendlyBaseTargetNet20.TestUserControl:",
+                    "System.Windows.Forms.TextBox:xxx",
+                    "System.Windows.Forms.GroupBox:タイプとウィンドウクラスが同一",
+                    "System.Windows.Forms.CheckBox:checkBox2",
+                    "System.Windows.Forms.CheckBox:checkBox1",
+                    "System.Windows.Forms.GroupBox:WindowTextが同じ",
+                    "System.Windows.Forms.Label:yyy",
+                    "System.Windows.Forms.Label:yyy",
+                    "System.Windows.Forms.PictureBox:",
+                    "System.Windows.Forms.Panel:",
+                    "System.Windows.Forms.Label:↓ここに矩形の重なったオブジェクトがある",
+                    "System.Windows.Forms.DataGridView:",
+                    "System.Windows.Forms.HScrollBar:",
+                    "FriendlyBaseTargetNet20.PanelEx:",
+                    "FriendlyBaseTargetNet20.PanelEx:",
+                    "FriendlyBaseTargetNet20.PanelEx:",
+                    "FriendlyBaseTargetNet20.PanelEx:",
+                    "System.Windows.Forms.Button:button1",
+                    "System.Windows.Forms.Panel:",
+                    "System.Windows.Forms.Panel:",
+                    "System.Windows.Forms.SplitContainer:",
+                    "System.Windows.Forms.SplitterPanel:",
+                    "System.Windows.Forms.CheckBox:checkBox3",
+                    "System.Windows.Forms.SplitterPanel:",
+                    "System.Windows.Forms.CheckBox:checkBox3"
+                };
+                Assert.AreEqual(ret.Length, list.Count);
+                for (int i = 0; i < ret.Length; i++)
+                {
+                    Assert.AreEqual(ret[i], list[i]);
+                }
+            }
+            if (process != null)
+            {
+                process.CloseMainWindow();
+            }
+        }
         /// <summary>
         /// 子ウィンドウの取得処理
         /// </summary>
